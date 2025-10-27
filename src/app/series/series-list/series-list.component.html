@@ -1,0 +1,45 @@
+<div class="container py-4">
+  <h1 class="mb-3">TV Series</h1>
+
+  <div class="row">
+
+    <div class="col-md-8">
+      <table class="table table-striped" *ngIf="series.length; else loading">
+        <thead>
+          <tr>
+            <th>#</th><th>Name</th><th>Channel</th><th>Seasons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of series"
+              (click)="select(s)"
+              [class.table-active]="selected?.num === s.num"
+              style="cursor:pointer">
+            <td>{{ s.num }}</td>
+            <td>{{ s.name }}</td>
+            <td>{{ s.channel }}</td>
+            <td>{{ s.seasons }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #loading><p class="text-muted">Cargando…</p></ng-template>
+
+      <p class="fw-bold mt-2">Promedio temporadas: {{ average | number:'1.2-2' }}</p>
+    </div>
+
+
+
+<!-- derecha: detalle -->
+<div class="col-md-4" *ngIf="selected as s">
+  <div class="card">
+    <img *ngIf="s.poster" [src]="s.poster" class="card-img-top" [alt]="s.name">
+    <div class="card-body">
+      <h5 class="card-title mb-1">{{ s.name }}</h5>
+      <p class="text-muted mb-2">{{ s.channel }} • {{ s.seasons }} seasons</p>
+      <p class="card-text">{{ s.description }}</p>
+      <a *ngIf="s.webpage" [href]="s.webpage" target="_blank" class="btn btn-primary">Ver más</a>
+    </div>
+  </div>
+</div>
+
